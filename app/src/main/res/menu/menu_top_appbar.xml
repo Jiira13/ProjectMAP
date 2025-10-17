@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/menu/menu_top_appbar.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_suppliers"
+        android:icon="@drawable/ic_groups_24"
+        android:title="Supplier"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/action_import"
+        android:icon="@drawable/ic_image_24"
+        android:title="Import Nota"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_24"
+        android:title="Pengaturan"
+        app:showAsAction="never" />
+
+</menu>

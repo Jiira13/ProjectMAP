@@ -5,5 +5,5 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.ProjectMAP" parent="Base.Theme.ProjectMAP" />
+    <style name="Theme.ProjectMAP" parent="Theme.Material3.Light.NoActionBar" />
 </resources>

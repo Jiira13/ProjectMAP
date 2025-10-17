@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.jimmy.projectmap.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.jimmy.projectmap.ProductListFragment"
+        android:label="Produk"
+        tools:layout="@layout/fragment_product_list" >
+        <!-- contoh arah ke detail -->
+        <action
+            android:id="@+id/action_productList_to_productDetail"
+            app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_productList_to_productForm"
+            app:destination="@id/productFormFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.jimmy.projectmap.ProductDetailFragment"
+        android:label="Detail Produk"
+        tools:layout="@layout/fragment_product_detail" />
+
+    <fragment
+        android:id="@+id/productFormFragment"
+        android:name="com.jimmy.projectmap.ProductFormFragment"
+        android:label="Form Produk"
+        tools:layout="@layout/fragment_product_form" />
+
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.jimmy.projectmap.TransactionFragment"
+        android:label="Transaksi"
+        tools:layout="@layout/fragment_transaction" />
+
+    <fragment
+        android:id="@+id/predictionsFragment"
+        android:name="com.jimmy.projectmap.PredictionFragment"
+        android:label="Prediksi"
+        tools:layout="@layout/fragment_prediction" />
+
+    <fragment
+        android:id="@+id/suppliersFragment"
+        android:name="com.jimmy.projectmap.SuppliersFragment"
+        android:label="Supplier"
+        tools:layout="@layout/fragment_suppliers" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.jimmy.projectmap.SettingsFragment"
+        android:label="Pengaturan"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/importReceiptFragment"
+        android:name="com.jimmy.projectmap.ImportReceiptFragment"
+        android:label="Import Nota"
+        tools:layout="@layout/fragment_import_receipt" />
+
+    <!-- Tambahkan di dalam <navigation> -->
+    <action
+        android:id="@+id/action_global_settings"
+        app:destination="@id/settingsFragment" />
+    <action
+        android:id="@+id/action_global_suppliers"
+        app:destination="@id/suppliersFragment" />
+    <action
+        android:id="@+id/action_global_import"
+        app:destination="@id/importReceiptFragment" />
+
+</navigation>

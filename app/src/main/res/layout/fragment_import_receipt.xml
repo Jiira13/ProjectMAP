@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/fragment_import_receipt.xml -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPickImage"
+            android:text="Pilih Gambar Nota"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_image_24"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent" android:layout_height="180dp"/>
+
+        <TextView
+            android:text="Hasil Pembacaan (dummy)"
+            android:textStyle="bold" android:layout_marginTop="12dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMappedItems"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfirmImport"
+            android:text="Konfirmasi Import"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>
