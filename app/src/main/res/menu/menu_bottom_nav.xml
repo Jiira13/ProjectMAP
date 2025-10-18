@@ -15,5 +15,5 @@
     <item
         android:id="@+id/predictionsFragment"
         android:title="Prediksi"
-        android:icon="@drawable/ic_psychology_24"/>
+        android:icon="@drawable/ic_graph_24"/>
 </menu>

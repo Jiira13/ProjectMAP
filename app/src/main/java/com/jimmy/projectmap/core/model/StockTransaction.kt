@@ -1,4 +1,6 @@
-package com.jimmy.projectmap
+package com.jimmy.projectmap.core.model
+
+import com.google.firebase.Timestamp
 
 enum class TransactionType { IN, OUT, ADJUST }
 
@@ -9,5 +11,5 @@ data class StockTransaction(
     val qty: Int = 0,              // IN: +, OUT: -, ADJUST: bebas (+/-)
     val type: TransactionType = TransactionType.IN,
     val note: String? = null,
-    val ts: com.google.firebase.Timestamp = com.google.firebase.Timestamp.now()
+    val ts: Timestamp = Timestamp.now()
 )

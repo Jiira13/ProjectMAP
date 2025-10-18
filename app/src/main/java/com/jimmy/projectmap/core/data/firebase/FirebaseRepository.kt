@@ -1,15 +1,19 @@
-package com.jimmy.projectmap
+package com.jimmy.projectmap.core.data.firebase
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
+import com.jimmy.projectmap.core.model.Product
+import com.jimmy.projectmap.core.data.InventoryRepository
+import com.jimmy.projectmap.core.model.StockTransaction
+import com.jimmy.projectmap.core.model.TransactionType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
-
+import kotlin.math.abs
 
 class FirebaseRepository(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -24,18 +28,33 @@ class FirebaseRepository(
     private var prodListener: ListenerRegistration? = null
     private var txnListener: ListenerRegistration? = null
 
+    private fun DocumentSnapshot.safeLong(field: String): Long {
+        val v = this.get(field)
+        return when (v) {
+            is Number -> v.toLong()
+            is String -> v.toLongOrNull() ?: 0L
+            else -> 0L
+        }
+    }
+
     // ---- Transaksi ----
     private val _transactions = MutableStateFlow<List<StockTransaction>>(emptyList())
     val transactions: StateFlow<List<StockTransaction>> = _transactions
 
     init {
+        // listener transaksi (urut terbaru)
+        collTransactions.orderBy("ts", Query.Direction.DESCENDING)
+            .addSnapshotListener { snap, err ->
+                if (err != null || snap == null) return@addSnapshotListener
+                _transactions.value = snap.documents.mapNotNull { it.toObject(StockTransaction::class.java)?.copy(id = it.id) }
+            }
+
         // Live products
         prodListener = collProducts.addSnapshotListener { snap, err ->
             if (err != null || snap == null) return@addSnapshotListener
             val list = snap.documents.mapNotNull { doc ->
                 doc.toObject(Product::class.java)?.copy(
-                    id = doc.getString("id")?.toLongOrNull()
-                        ?: doc.getLong("id") ?: 0L
+                    id = doc.safeLong("id")
                 )
             }.sortedBy { it.name }
             _products.value = list
@@ -43,7 +62,7 @@ class FirebaseRepository(
 
         // Live transactions (seluruhnya; bisa difilter di UI)
         txnListener = collTransactions
-            .orderBy("ts", com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .orderBy("ts", Query.Direction.DESCENDING)
             .addSnapshotListener { snap, err ->
                 if (err != null || snap == null) return@addSnapshotListener
                 val list = snap.documents.mapNotNull { doc ->
@@ -72,32 +91,26 @@ class FirebaseRepository(
 
     override suspend fun getProduct(id: Long): Product? {
         val doc = collProducts.document(id.toString()).get().await()
-        return if (doc.exists()) doc.toObject(Product::class.java)?.copy(id = id) else null
+        return if (doc.exists()) {
+            doc.toObject(Product::class.java)?.copy(id = doc.safeLong("id"))
+        } else null
     }
 
     suspend fun addTransaction(tx: StockTransaction) {
         db.runTransaction { tr ->
-            // 1) Ambil produk - FIXED: Use indexed accessor instead of get()
             val pRef = collProducts.document(tx.productId.toString())
-            val pSnap = tr[pRef]  // Changed from tr.get(pRef)
-            if (!pSnap.exists()) throw IllegalStateException("Produk tidak ditemukan")
+            val pSnap = tr.get(pRef)
+            val product = pSnap.toObject(Product::class.java) ?: throw IllegalStateException("Produk tidak ditemukan")
 
-            val product = pSnap.toObject(Product::class.java)
-                ?: throw IllegalStateException("Produk invalid")
-            val currentStock = product.stock
             val delta = when (tx.type) {
                 TransactionType.IN -> kotlin.math.abs(tx.qty)
                 TransactionType.OUT -> -kotlin.math.abs(tx.qty)
                 TransactionType.ADJUST -> tx.qty
             }
-            val newStock = (currentStock + delta).coerceAtLeast(0)
+            val newStock = (product.stock + delta).coerceAtLeast(0)
 
-            // 2) Update stok
             tr.set(pRef, product.copy(stock = newStock))
-
-            // 3) Tulis transaksi
-            val tRef = collTransactions.document()
-            tr.set(tRef, tx.copy(qty = delta))
+            tr.set(collTransactions.document(), tx.copy(qty = delta))
             null
         }.await()
     }
@@ -109,4 +122,5 @@ class FirebaseRepository(
         prodListener?.remove()
         txnListener?.remove()
     }
+
 }

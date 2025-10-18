@@ -1,4 +1,4 @@
-package com.jimmy.projectmap
+package com.jimmy.projectmap.core.model
 
 data class Product(
     val id: Long = 0L,

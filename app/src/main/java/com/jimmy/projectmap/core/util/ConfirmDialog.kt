@@ -1,4 +1,4 @@
-package com.jimmy.projectmap
+package com.jimmy.projectmap.core.util
 
 import android.content.Context
 import android.view.LayoutInflater

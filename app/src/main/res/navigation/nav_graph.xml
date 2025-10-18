@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.jimmy.projectmap.DashboardFragment"
+        android:name="com.jimmy.projectmap.ui.dashboard.DashboardFragment"
         android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/productListFragment"
-        android:name="com.jimmy.projectmap.ProductListFragment"
+        android:name="com.jimmy.projectmap.ui.product.ProductListFragment"
         android:label="Produk"
         tools:layout="@layout/fragment_product_list" >
         <!-- contoh arah ke detail -->
@@ -27,37 +27,37 @@
 
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.jimmy.projectmap.ProductDetailFragment"
+        android:name="com.jimmy.projectmap.ui.product.ProductDetailFragment"
         android:label="Detail Produk"
         tools:layout="@layout/fragment_product_detail" />
 
     <fragment
         android:id="@+id/productFormFragment"
-        android:name="com.jimmy.projectmap.ProductFormFragment"
+        android:name="com.jimmy.projectmap.ui.product.ProductFormFragment"
         android:label="Form Produk"
         tools:layout="@layout/fragment_product_form" />
 
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="com.jimmy.projectmap.TransactionFragment"
+        android:name="com.jimmy.projectmap.ui.transaction.TransactionFragment"
         android:label="Transaksi"
         tools:layout="@layout/fragment_transaction" />
 
     <fragment
         android:id="@+id/predictionsFragment"
-        android:name="com.jimmy.projectmap.PredictionFragment"
+        android:name="com.jimmy.projectmap.ui.prediction.PredictionFragment"
         android:label="Prediksi"
         tools:layout="@layout/fragment_prediction" />
 
     <fragment
         android:id="@+id/suppliersFragment"
-        android:name="com.jimmy.projectmap.SuppliersFragment"
+        android:name="com.jimmy.projectmap.ui.suppliers.SuppliersFragment"
         android:label="Supplier"
         tools:layout="@layout/fragment_suppliers" />
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.jimmy.projectmap.SettingsFragment"
+        android:name="com.jimmy.projectmap.ui.settings.SettingsFragment"
         android:label="Pengaturan"
         tools:layout="@layout/fragment_settings" />
 

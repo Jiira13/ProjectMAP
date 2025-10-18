@@ -1,4 +1,4 @@
-package com.jimmy.projectmap.adapter
+package com.jimmy.projectmap.ui.transaction
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jimmy.projectmap.R
-import com.jimmy.projectmap.StockTransaction
-import com.jimmy.projectmap.TransactionType
+import com.jimmy.projectmap.core.model.StockTransaction
+import com.jimmy.projectmap.core.model.TransactionType
+import java.text.SimpleDateFormat
+import java.util.Locale
+import kotlin.math.abs
 
 class TransactionAdapter : ListAdapter<StockTransaction, TransactionAdapter.VH>(DIFF) {
     object DIFF : DiffUtil.ItemCallback<StockTransaction>() {
@@ -35,8 +38,8 @@ class TransactionAdapter : ListAdapter<StockTransaction, TransactionAdapter.VH>(
             TransactionType.ADJUST -> if (tx.qty >= 0) "+" else ""
         }
         h.tvTitle.text = "${tx.type.name} - ${tx.productName}"
-        val dateStr = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault())
+        val dateStr = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
             .format(tx.ts.toDate())
-        h.tvMeta.text = "Qty $sign${kotlin.math.abs(tx.qty)} • $dateStr"
+        h.tvMeta.text = "Qty $sign${abs(tx.qty)} • $dateStr"
     }
 }

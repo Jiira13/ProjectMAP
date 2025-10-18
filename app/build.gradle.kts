@@ -38,6 +38,11 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.fragment:fragment-ktx:1.8.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
+
     // Firebase BOM - manages all Firebase versions
     implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
     implementation("com.google.firebase:firebase-firestore-ktx:25.1.4") // Remove version

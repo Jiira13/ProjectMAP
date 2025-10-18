@@ -1,4 +1,4 @@
-package com.jimmy.projectmap
+package com.jimmy.projectmap.ui.main
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jimmy.projectmap.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController

@@ -1,4 +1,4 @@
-package com.jimmy.projectmap
+package com.jimmy.projectmap.ui.transaction
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,17 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.jimmy.projectmap.core.data.firebase.FirebaseRepository
+import com.jimmy.projectmap.R
+import com.jimmy.projectmap.core.data.ServiceLocator
+import com.jimmy.projectmap.core.model.StockTransaction
+import com.jimmy.projectmap.core.model.TransactionType
 import kotlinx.coroutines.launch
 
-class AddTransactionBottomSheet : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
+class AddTransactionBottomSheet : BottomSheetDialogFragment() {
 
     private val repo by lazy { (ServiceLocator.repo as FirebaseRepository) }
 

@@ -1,5 +1,6 @@
-package com.jimmy.projectmap
+package com.jimmy.projectmap.core.data
 
+import com.jimmy.projectmap.core.model.Product
 import kotlinx.coroutines.flow.StateFlow
 
 interface InventoryRepository {
